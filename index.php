@@ -1,3 +1,11 @@
+<!--connect to file-->
+<?php
+include('includes/connect.php');
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -215,21 +223,17 @@
               <h4>BRAND</h4>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="" class="nav-link active text-center text-dark custom-text">Brand1</a>
-          </li>
-          <li class="nav-item">
-            <a href="" class="nav-link active text-center text-dark custom-text">Brand1</a>
-          </li>
-          <li class="nav-item">
-            <a href="" class="nav-link active text-center text-dark custom-text">Brand1</a>
-          </li>
-          <li class="nav-item">
-            <a href="" class="nav-link active text-center text-dark custom-text">Brand1</a>
-          </li>
-          <li class="nav-item">
-            <a href="" class="nav-link active text-center text-dark custom-text">Brand1</a>
-          </li>
+          <?php
+          $select_brands = "SELECT * FROM brands";
+          $result_brands = mysqli_query($con, $select_brands);
+          while ($row_data = mysqli_fetch_array($result_brands)) {
+            $brand_id = $row_data['brand_id'];
+            $brand_title = $row_data['brand_title'];
+            echo "<li class='nav-item'>
+            <a href='' class='nav-link active text-center text-dark custom-text'>$brand_title</a>
+          </li>";
+          }
+          ?>
         </ul>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item bg-secondary">
@@ -237,23 +241,22 @@
               <h4>CATEGORY</h4>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="" class="nav-link active text-center text-dark custom-text">Brand1</a>
-          </li>
-          <li class="nav-item">
-            <a href="" class="nav-link active text-center text-dark custom-text">Brand1</a>
-          </li>
-          <li class="nav-item">
-            <a href="" class="nav-link active text-center text-dark custom-text">Brand1</a>
-          </li>
-          <li class="nav-item">
-            <a href="" class="nav-link active text-center text-dark custom-text">Brand1</a>
-          </li>
-          <li class="nav-item">
-            <a href="" class="nav-link active text-center text-dark custom-text">Brand1</a>
-          </li>
+          <?php
+          $select_categories = "SELECT * FROM categories";
+          $result_categories = mysqli_query($con, $select_categories);
+
+          while ($row_data = mysqli_fetch_array($result_categories)) {
+            $category_id = $row_data['category_id'];
+            $category_title = $row_data['category_title'];
+
+            echo "<li class='nav-item'>
+            <a href='' class='nav-link active text-center text-dark custom-text'>$category_title</a>
+          </li>";
+          }
+          ?>
+
+
         </ul>
-        <h2>hey</h2>
       </div>
     </div>
   </div>
