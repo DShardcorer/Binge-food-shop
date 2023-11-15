@@ -1,6 +1,7 @@
 <!--connect to file-->
 <?php
 include('includes/connect.php');
+include('functions/common_function.php');
 ?>
 
 
@@ -23,6 +24,22 @@ include('includes/connect.php');
     integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i&display=swap">
+
+
+
+  <style>
+    .card-description {
+      max-height: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-title {
+      max-height: 50px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  </style>
 
 </head>
 
@@ -93,22 +110,21 @@ include('includes/connect.php');
       <div class="col-md-10">
         <!--products-->
         <div class="row">
-          <div class=" col-md-4 mb-2">
-            <div class="card">
-              <img class="card-img-top"
-                src="images\Marie-Callender-s-Southern-Pecan-Pie-32-oz-Frozen_0fe3719a-b745-4bde-a19e-e9a39dfc0eed.96fbcb4fa419322be8bd2d16ebf95a75.webp"
-                alt="Card image cap">
-              <div class="card-body">
-                <h5 class="card-title">Marie Callender's Southern Pecan Pie, 32 oz (Frozen)</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                  card's
-                  content.</p>
-                <a href="#" class="btn btn-info">Add to cart</a>
-                <a href="#" class="btn btn-dark">View Details</a>
-              </div>
-            </div>
-          </div>
-        </div>
+          <!--fecthing products from database-->
+          <?php
+                    if (isset($_GET['brand'])) {
+                      get_unique_brands();
+                    } elseif (isset($_GET['category'])) {
+                      // Fetch products based on categories
+                      get_unique_categories();
+                    } else {
+                      // Default: Fetch all products
+                      getproducts();
+                    }
+          ?>
+
+
+        </div><!--end of row-->
       </div>
       <div class="col-md-2 bg-warning text-dark">
         <!--side bar-->
@@ -119,15 +135,7 @@ include('includes/connect.php');
             </a>
           </li>
           <?php
-          $select_brands = "SELECT * FROM brands";
-          $result_brands = mysqli_query($con, $select_brands);
-          while ($row_data = mysqli_fetch_array($result_brands)) {
-            $brand_id = $row_data['brand_id'];
-            $brand_title = $row_data['brand_title'];
-            echo "<li class='nav-item'>
-            <a href='' class='nav-link active text-center text-dark custom-text'>$brand_title</a>
-          </li>";
-          }
+          getbrands();
           ?>
         </ul>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -137,17 +145,7 @@ include('includes/connect.php');
             </a>
           </li>
           <?php
-          $select_categories = "SELECT * FROM categories";
-          $result_categories = mysqli_query($con, $select_categories);
-
-          while ($row_data = mysqli_fetch_array($result_categories)) {
-            $category_id = $row_data['category_id'];
-            $category_title = $row_data['category_title'];
-
-            echo "<li class='nav-item'>
-            <a href='' class='nav-link active text-center text-dark custom-text'>$category_title</a>
-          </li>";
-          }
+          getcategories();
           ?>
 
 
