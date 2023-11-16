@@ -71,7 +71,7 @@
                 </a>
             </div>
             <div class="button text-center">
-                <button class="my-3 btn-custom"><a href="index.php?insert_products" class="text-center nav-link text-dark bg-warning my-1">Insert
+                <button class="my-3 btn-custom"><a href="insert_products.php" class="text-center nav-link text-dark bg-warning my-1">Insert
                         Products</a></button>
                 <!-- Add the 'btn-custom' class to all buttons -->
                 <button class="btn-custom"><a href="" class="text-center nav-link text-dark bg-warning my-1">View

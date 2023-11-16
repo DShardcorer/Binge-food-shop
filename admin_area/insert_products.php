@@ -1,7 +1,7 @@
 <?php
 include('../includes/connect.php');
 
-if (isset($_POST['insert_product'])) {
+if (isset($_POST['insert_products'])) {
     $product_title = mysqli_real_escape_string($con, $_POST['product_title']);
     $product_description = mysqli_real_escape_string($con, $_POST['product_description']);
     $product_keywords = mysqli_real_escape_string($con, $_POST['product_keywords']);
