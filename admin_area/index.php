@@ -71,7 +71,7 @@
                 </a>
             </div>
             <div class="button text-center">
-                <button class="my-3 btn-custom"><a href="insert_products.php" class="text-center nav-link text-dark bg-warning my-1">Insert
+                <button class="my-3 btn-custom"><a href="insert_product.php" class="text-center nav-link text-dark bg-warning my-1">Insert
                         Products</a></button>
                 <!-- Add the 'btn-custom' class to all buttons -->
                 <button class="btn-custom"><a href="" class="text-center nav-link text-dark bg-warning my-1">View
@@ -148,7 +148,7 @@
             </div>
             <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
                 Github Source Code:
-                <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+                <a class="text-dark" href=https://github.com/DShardcorer/Binge-food-shop>Binge's Food Shop</a>
             </div>
             <!-- Copyright -->
         </footer>

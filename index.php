@@ -197,7 +197,7 @@ include('functions/common_function.php');
       </div>
       <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
         Github Source Code:
-        <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+        <a class="text-dark" href=https://github.com/DShardcorer/Binge-food-shop>Binge's Food Shop</a>
       </div>
       <!-- Copyright -->
     </footer>
