@@ -6,15 +6,16 @@ if(isset($_POST['insert_cat'])){
 
     // Select data from the database
     $select_query = "SELECT * FROM categories WHERE category_title = '$category_title'";
-    $result_select = mysqli_query($con, $select_query);
-    $number_of_rows = mysqli_num_rows($result_select);
+    $result_select = pg_query($con, $select_query);
+
+    $number_of_rows = pg_num_rows($result_select);
 
     if($number_of_rows > 0){
         echo "<script>alert('Category already exists')</script>";
         echo "<script>window.open('index.php?insert_categories','_self')</script>";
     } else {
         $insert_query = "INSERT INTO categories (category_title) VALUES ('$category_title')";
-        $result = mysqli_query($con, $insert_query);
+        $result = pg_query($con, $insert_query);
 
         if($result){
             echo "<script>alert('Category inserted successfully')</script>";

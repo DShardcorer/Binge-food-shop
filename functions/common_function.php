@@ -18,8 +18,8 @@ function getproducts()
 
 
             $select_query = "SELECT * FROM products ORDER BY RAND() LIMIT 0,9";
-            $result_query = mysqli_query($con, $select_query);
-            while ($row = mysqli_fetch_array($result_query)) {
+            $result_query = pg_query($con, $select_query);
+            while ($row = pg_fetch_array($result_query)) {
                 $product_id = $row['product_id'];
                 $product_title = $row['product_title'];
                 $product_description = $row['product_description'];
@@ -56,12 +56,12 @@ function get_unique_categories()
     $category_id = $_GET['category'];
     $select_query = "SELECT * FROM products WHERE category_id='$category_id'";
 
-    $num_of_rows = mysqli_num_rows(mysqli_query($con, $select_query));
+    $num_of_rows = pg_num_rows(pg_query($con, $select_query));
     if($num_of_rows==0){
         echo "<h1 class='text-center'>No products found in this category</h1>";
     }
-    $result_query = mysqli_query($con, $select_query);
-    while ($row = mysqli_fetch_array($result_query)) {
+    $result_query = pg_query($con, $select_query);
+    while ($row = pg_fetch_array($result_query)) {
         $product_id = $row['product_id'];
         $product_title = $row['product_title'];
         $product_description = $row['product_description'];
@@ -96,13 +96,13 @@ function get_unique_brands()
     $brand_id = $_GET['brand'];
     $select_query = "SELECT * FROM products WHERE brand_id='$brand_id'";
 
-    $num_of_rows = mysqli_num_rows(mysqli_query($con, $select_query));
+    $num_of_rows = pg_num_rows(pg_query($con, $select_query));
     if($num_of_rows==0){
         echo "<h1 class='text-center'>No products found for this brand</h1>";
     }
     
-    $result_query = mysqli_query($con, $select_query);
-    while ($row = mysqli_fetch_array($result_query)) {
+    $result_query = pg_query($con, $select_query);
+    while ($row = pg_fetch_array($result_query)) {
         $product_id = $row['product_id'];
         $product_title = $row['product_title'];
         $product_description = $row['product_description'];
@@ -139,8 +139,8 @@ function getbrands()
 
     global $con;
     $select_brands = "SELECT * FROM brands";
-    $result_brands = mysqli_query($con, $select_brands);
-    while ($row_data = mysqli_fetch_array($result_brands)) {
+    $result_brands = pg_query($con, $select_brands);
+    while ($row_data = pg_fetch_array($result_brands)) {
         $brand_id = $row_data['brand_id'];
         $brand_title = $row_data['brand_title'];
         echo "<li class='nav-item'>
@@ -153,9 +153,9 @@ function getcategories()
 {
     global $con;
     $select_categories = "SELECT * FROM categories";
-    $result_categories = mysqli_query($con, $select_categories);
+    $result_categories = pg_query($con, $select_categories);
 
-    while ($row_data = mysqli_fetch_array($result_categories)) {
+    while ($row_data = pg_fetch_array($result_categories)) {
         $category_id = $row_data['category_id'];
         $category_title = $row_data['category_title'];
 
