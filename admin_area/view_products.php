@@ -22,17 +22,17 @@
             $product_price = $row['product_price'];
             $product_status = $row['status'];
             $number++;
-            $get_sold_amount = "SELECT * FROM order_info WHERE product_id = $product_id";
+            $amount_sold = $row['amount_sold'];
             ?>
             <tr class='text-center'>
                 <td><?php echo $number; ?></td>
                 <td><?php echo $product_title; ?></td>
                 <td><img src='./product_images/<?php echo $product_image1; ?>' width='60' height='60'></td>
                 <td><?php echo $product_price; ?></td>
-                <td>0</td>
+                <td><?php echo $amount_sold; ?><</td>
                 <td><?php echo $product_status; ?></td>
-                <td><a href="#" class="text-dark"><i class="fa-solid fa-pen-to-square"></i></a></td>
-                <td><a href="#" class="text-dark"><i class="fa-solid fa-trash"></i></a></td>
+                <td><a href="index.php?edit_products=<?php echo $product_id ?>" class="text-dark"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                <td><a href="index.php?delete_product=<?php echo $product_id ?>" class="text-dark"><i class="fa-solid fa-trash"></i></a></td>
             </tr>
         <?php
         } ?>
