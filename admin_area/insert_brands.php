@@ -6,15 +6,15 @@ if(isset($_POST['insert_brand'])){
 
     // Select data from the database
     $select_query = "SELECT * FROM brands WHERE brand_title = '$brand_title'";
-    $result_select = mysqli_query($con, $select_query);
-    $number_of_rows = mysqli_num_rows($result_select);
+    $result_select = pg_query($con, $select_query);
+    $number_of_rows = pg_num_rows($result_select);
 
     if($number_of_rows > 0){
         echo "<script>alert('Brand already exists')</script>";
         echo "<script>window.open('index.php?insert_brands','_self')</script>";
     } else {
         $insert_query = "INSERT INTO brands (brand_title) VALUES ('$brand_title')";
-        $result = mysqli_query($con, $insert_query);
+        $result = pg_query($con, $insert_query);
 
         if($result){
             echo "<script>alert('Brand inserted successfully')</script>";
