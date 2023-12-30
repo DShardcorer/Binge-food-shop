@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-
+  overflow: hidden;
 }
 
 .logo{
@@ -26,3 +26,12 @@
   object-fit: contain;
 }*/
 
+.cart_image{
+  width:80px;
+  height:80px;
+}
+
+.profile_img{
+  width: 100%;
+  height: 100%;
+}

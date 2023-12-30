@@ -26,10 +26,6 @@ session_start();
 
 
   <style>
-    body {
-      overflow-x: hidden;
-    }
-
     .card-description {
       max-height: 100px;
       overflow: hidden;
@@ -63,22 +59,14 @@ session_start();
             <li class="nav-item">
               <a class="nav-link" href="display_all.php">Products</a>
             </li>
-            <?php
-            if(!isset($_SESSION['username'])){
-            echo"<li class='nav-item'>
-            <a class='nav-link' href='./users_area/user_registration.php'>Register</a>
-          </li> ";
-            }else{
-              echo"<li class='nav-item'>
-              <a class='nav-link' href='./users_area/profile.php'>Profile</a>";
-            
-            }
-            ?>
+            <li class="nav-item">
+            <a class="nav-link" href="./users_area/user_registration.php">Register</a>
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Contact</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="cart.php"><i class="fa-solid fa-cart-shopping"></i><sup><?php cart_item(); ?></sup></a>
+            <a class="nav-link" href="cart.php"><i class="fa-solid fa-cart-shopping"></i><sup><?php cart_item(); ?></sup></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Total Price:$<?php total_cart_price(); ?>/-</a>
@@ -86,43 +74,35 @@ session_start();
 
 
           </ul>
-          <form class="d-flex" action="search_product.php" method="get">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_data">
-            <!--<button class="btn btn-outline-success" type="submit">Search</button> -->
-            <input type="submit" class="btn btn-outline-success" value="Search" class="btn btn-outline-light" name="search_data_product">
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
         </div>
       </div>
     </nav>
   </div>
 
-  <!--cart func-->
-  <?php
-  cart();
-
-  ?>
   <!-- second child -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
     <ul class="navbar-nav me-auto">
-
       <?php
-      if (!isset($_SESSION['username'])) {
-        echo "<li class='nav-item'>
-        <a class='nav-link' href='#'>Welcome Guest</a>
-      </li>";
-      } else {
-        echo "<li class='nav-item'>
-                <a class='nav-link' href=''>Welcome ".$_SESSION['username']."!</a> 
-                </li>";
-      }
-
-      if (!isset($_SESSION['username'])) {
-        echo "<li class='nav-item'>
+            if (!isset($_SESSION['username'])) {
+              echo "<li class='nav-item'>
+              <a class='nav-link' href='#'>Welcome Guest</a>
+            </li>";
+            } else {
+              echo "<li class='nav-item'>
+                      <a class='nav-link' href=''>Welcome ".$_SESSION['username']."!</a> 
+                      </li>";
+            }
+      if(!isset($_SESSION['username'])){
+      echo "<li class='nav-item'>
         <a class='nav-link' href='./users_area/user_login.php'>Login</a> 
         </li>";
-      } else {
+      }else{
         echo "<li class='nav-item'>
-        <a class='nav-link' href='./users_area/logout.php'>Logout</a> 
+        <a class='nav-link' href='./users_area/user_logout.php'>Logout</a> 
         </li>";
       }
       ?>
@@ -150,10 +130,8 @@ session_start();
             get_unique_categories();
           } else {
             // Default: Fetch all products
-            getproducts();
+            get_all_products();
           }
-          $ip = getIPAddress();
-          echo 'User Real IP Address - ' . $ip;
           ?>
 
 

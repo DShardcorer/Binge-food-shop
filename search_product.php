@@ -2,7 +2,6 @@
 <?php
 include('includes/connect.php');
 include('functions/common_function.php');
-session_start();
 ?>
 
 
@@ -26,10 +25,6 @@ session_start();
 
 
   <style>
-    body {
-      overflow-x: hidden;
-    }
-
     .card-description {
       max-height: 100px;
       overflow: hidden;
@@ -63,17 +58,9 @@ session_start();
             <li class="nav-item">
               <a class="nav-link" href="display_all.php">Products</a>
             </li>
-            <?php
-            if(!isset($_SESSION['username'])){
-            echo"<li class='nav-item'>
-            <a class='nav-link' href='./users_area/user_registration.php'>Register</a>
-          </li> ";
-            }else{
-              echo"<li class='nav-item'>
-              <a class='nav-link' href='./users_area/profile.php'>Profile</a>";
-            
-            }
-            ?>
+            <li class="nav-item">
+            <a class="nav-link" href="./users_area/user_registration.php">Register</a>
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Contact</a>
             </li>
@@ -86,7 +73,7 @@ session_start();
 
 
           </ul>
-          <form class="d-flex" action="search_product.php" method="get">
+          <form class="d-flex" action="" method="get">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_data">
             <!--<button class="btn btn-outline-success" type="submit">Search</button> -->
             <input type="submit" class="btn btn-outline-success" value="Search" class="btn btn-outline-light" name="search_data_product">
@@ -95,17 +82,14 @@ session_start();
       </div>
     </nav>
   </div>
-
-  <!--cart func-->
+  <!--calling cart function-->
   <?php
   cart();
-
   ?>
   <!-- second child -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
     <ul class="navbar-nav me-auto">
-
-      <?php
+    <?php
       if (!isset($_SESSION['username'])) {
         echo "<li class='nav-item'>
         <a class='nav-link' href='#'>Welcome Guest</a>
@@ -122,7 +106,7 @@ session_start();
         </li>";
       } else {
         echo "<li class='nav-item'>
-        <a class='nav-link' href='./users_area/logout.php'>Logout</a> 
+        <a class='nav-link' href='./users_area/user_logout.php'>Logout</a> 
         </li>";
       }
       ?>
@@ -150,10 +134,8 @@ session_start();
             get_unique_categories();
           } else {
             // Default: Fetch all products
-            getproducts();
+            search_product();
           }
-          $ip = getIPAddress();
-          echo 'User Real IP Address - ' . $ip;
           ?>
 
 
