@@ -5,8 +5,8 @@ session_start();
 if (isset($_GET['order_id'])) {
     $order_id = $_GET['order_id'];
     $select_data = "SELECT * FROM user_orders WHERE order_id = '$order_id'";
-    $result_data = mysqli_query($con, $select_data);
-    $row_fetch = mysqli_fetch_assoc($result_data);
+    $result_data = pg_query($con, $select_data);
+    $row_fetch = pg_fetch_assoc($result_data);
     $invoice_number = $row_fetch['invoice_number'];
     $amount_due = $row_fetch['amount_due'];
 }
@@ -20,11 +20,11 @@ if (isset($_POST['confirm_payment'])) {
     // Insert payment data into user_payments table
     $insert_data = "INSERT INTO user_payments (order_id, invoice_number, amount, payment_mode) 
                     VALUES ('$order_id', '$invoice_number', '$amount', '$payment_mode')";
-    $result = mysqli_query($con, $insert_data);
+    $result = pg_query($con, $insert_data);
 
     // Update order status to Completed
     $update_order = "UPDATE user_orders SET order_status = '$complete' WHERE order_id = '$order_id'";
-    $result_update = mysqli_query($con, $update_order);
+    $result_update = pg_query($con, $update_order);
 
     if ($result && $result_update) {
         echo "<script>alert('Payment Successful!')</script>";

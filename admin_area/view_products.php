@@ -13,9 +13,9 @@
     <tbody class="bg-secondary text-light">
         <?php
         $get_products = "SELECT * FROM products";
-        $result_products = mysqli_query($con, $get_products);
-        $number=0;
-        while($row = mysqli_fetch_assoc($result_products)){
+        $result_products = pg_query($con, $get_products);
+        $number = 0;
+        while($row = pg_fetch_assoc($result_products)){
             $product_id = $row['product_id'];
             $product_title = $row['product_title'];
             $product_image1 = $row['product_image1'];

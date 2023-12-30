@@ -29,12 +29,10 @@ include('../functions/common_function.php');
     <?php
     $user_ip= getIPAddress();
     $get_user = "SELECT * FROM user_table WHERE user_ip='$user_ip'";
-    $result = mysqli_query($con, $get_user);
-    $run_query = mysqli_fetch_array($result);
+    $result = pg_query($con, $get_user);
+    $run_query = pg_fetch_array($result);
     $user_id = $run_query['user_id'];
 
-    
-    
     ?>
 
 
@@ -53,7 +51,6 @@ include('../functions/common_function.php');
                 <h2 class="">Pay upon delivery</h2>
             </a>
             </div>
-            
             
         </div>
     </div>

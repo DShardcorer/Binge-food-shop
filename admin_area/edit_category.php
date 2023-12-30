@@ -2,8 +2,8 @@
 if(isset($_GET['edit_category'])){
     $category_id = $_GET['edit_category'];
     $get_cat = "SELECT * FROM categories WHERE category_id = '$category_id'";
-    $run_cat = mysqli_query($con,$get_cat);
-    $row_cat = mysqli_fetch_assoc($run_cat);
+    $run_cat = pg_query($con, $get_cat); // Assuming $con is the PostgreSQL connection variable
+    $row_cat = pg_fetch_assoc($run_cat);
     $category_id = $row_cat['category_id'];
     $category_title = $row_cat['category_title'];
 }
@@ -11,7 +11,7 @@ if(isset($_GET['edit_category'])){
 if(isset($_POST['update_cat'])){
     $category_title = $_POST['category_title'];
     $update_cat = "UPDATE categories SET category_title = '$category_title' WHERE category_id = '$category_id'";
-    $run_cat = mysqli_query($con,$update_cat);
+    $run_cat = pg_query($con, $update_cat); // Assuming $con is the PostgreSQL connection variable
     if($run_cat){
         echo "<script>alert('Category has been updated')</script>";
         echo "<script>window.open('index.php?view_cats','_self')</script>";
@@ -32,3 +32,4 @@ if(isset($_POST['update_cat'])){
         <input type="submit" class="form-control btn btn-warning" name="update_cat" value="Update Category" 
   aria-label="Username" aria-describedby="basic-addon1">
     </div>
+</form>

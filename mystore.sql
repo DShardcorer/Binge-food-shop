@@ -145,3 +145,21 @@ INSERT INTO user_table (username, user_email, user_password, user_image, user_ip
 ('Cao Huy Dong', 'caohuydong123@gmail.com', '$2y$10$HBL9BYdyYO72Zy0ukpmjVO7Q.rclpKrVluncVU8SaipGFG93W5J2W', 'logo-soict-hust-1.png', '::1', 'Alabama', '0843182003'),
 ('Ngo Khanh', 'khanhngo@gmail.com', '$2y$10$z/OpBYRdZErs5J1SIz0.YOa7U1bkEbwJ4m4lXcRX/B4Eq7H.CxaA6', 'HUST.png', '::1', 'hanoi', '1234'),
 ('caohuydong', 'caohuydong3108@gmail.com', '$2y$10$eAsq7gvG/IBCCfBn/BIwZeXoGX4s07V4iUNGIrSrjYgjXX.xhUCvC', 'HUST.png', '::1', 'hanoi', '0999');
+
+
+CREATE OR REPLACE FUNCTION update_amount_sold()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Update the amount_sold in products table
+    UPDATE products
+    SET amount_sold = amount_sold + NEW.quantity
+    WHERE product_id = NEW.product_id;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER order_info_insert_trigger
+AFTER INSERT ON order_info
+FOR EACH ROW
+EXECUTE FUNCTION update_amount_sold();

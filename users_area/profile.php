@@ -5,9 +5,6 @@ include('../functions/common_function.php');
 session_start();
 ?>
 
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,8 +19,6 @@ session_start();
   <!--font awersome link-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i&display=swap">
-
-
 
   <style>
     body {
@@ -41,12 +36,13 @@ session_start();
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    .profile_img{
-  width: 90%;
-  margin: auto;
-  display: block;
-  object-fit: contain;
-}
+
+    .profile_img {
+      width: 90%;
+      margin: auto;
+      display: block;
+      object-fit: contain;
+    }
   </style>
 
 </head>
@@ -81,8 +77,6 @@ session_start();
             <li class="nav-item">
               <a class="nav-link" href="#">Total Price:$<?php total_cart_price(); ?>/-</a>
             </li>
-
-
           </ul>
           <form class="d-flex" action="../search_product.php" method="get">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_data">
@@ -97,12 +91,10 @@ session_start();
   <!--cart func-->
   <?php
   cart();
-
   ?>
   <!-- second child -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
     <ul class="navbar-nav me-auto">
-
       <?php
       if (!isset($_SESSION['username'])) {
         echo "<li class='nav-item'>
@@ -110,7 +102,7 @@ session_start();
       </li>";
       } else {
         echo "<li class='nav-item'>
-                <a class='nav-link' href=''>Welcome ".$_SESSION['username']."!</a> 
+                <a class='nav-link' href=''>Welcome " . $_SESSION['username'] . "!</a> 
                 </li>";
       }
 
@@ -129,68 +121,57 @@ session_start();
   <!--third child-->
   <div class="bg-light">
     <h3 class="text-center">Latest Products</h3>
-    <p class="text-center">Explore well-famed food brands and pick your fill ! Let's get obese together !</p>
+    <p class="text-center">Explore well-famed food brands and pick your fill! Let's get obese together!</p>
   </div>
-
-
-
-
-
 
   <!--fourth child-->
   <div class="row">
     <div class="col-md-2">
-        <ul class="navbar-nav bg-warning text-center">
+      <ul class="navbar-nav bg-warning text-center">
         <li class="nav-item bg-warning">
-              <a class="nav-link active" aria-current="page" href="#"><h4>Your Profile</h4></a>
-            </li>
-            <?php
-            $username = $_SESSION['username'];
-            $user_image = "SELECT * FROM user_table WHERE username = '$username'";
-            $result_user_image = mysqli_query($con, $user_image);
-            $row_image = mysqli_fetch_array($result_user_image);
-            $user_image = $row_image['user_image'];
-            echo "<li class='nav-item '>
+          <a class="nav-link active" aria-current="page" href="#"><h4>Your Profile</h4></a>
+        </li>
+        <?php
+        $username = $_SESSION['username'];
+        $user_image = "SELECT * FROM user_table WHERE username = '$username'";
+        $result_user_image = pg_query($con, $user_image);
+        $row_image = pg_fetch_array($result_user_image);
+        $user_image = $row_image['user_image'];
+        echo "<li class='nav-item '>
             <img src='./user_images/$user_image'  class='profile_img'>
           </li>";
-            ?>
-
-            <li class="nav-item ">
-              <a class="nav-link" aria-current="page" href="profile.php">Pending Orders</a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link active" aria-current="page" href="profile.php?my_orders">My Orders</a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link active" aria-current="page" href="profile.php?edit_account">Edit Account</a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link active" aria-current="page" href="profile.php?delete_account">Delete Account</a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link active" aria-current="page" href="logout.php">Logout</a>
-            </li>
-
-
-
-        </ul>
+        ?>
+        <li class="nav-item ">
+          <a class="nav-link" aria-current="page" href="profile.php">Pending Orders</a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link active" aria-current="page" href="profile.php?my_orders">My Orders</a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link active" aria-current="page" href="profile.php?edit_account">Edit Account</a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link active" aria-current="page" href="profile.php?delete_account">Delete Account</a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link active" aria-current="page" href="logout.php">Logout</a>
+        </li>
+      </ul>
     </div>
 
-
-
     <div class="col-md-10 text-center">
-    <?php
-    get_user_order_details();
-    if(isset($_GET['edit_account'])){
-      include('edit_account.php');
-    }
-    if(isset($_GET['my_orders'])){
-      include('user_orders.php');
-    }
-    if(isset($_GET['delete_account'])){
-      include('delete_account.php');
-    }
-    ?>
+      <?php
+      get_user_order_details();
+      if (isset($_GET['edit_account'])) {
+        include('edit_account.php');
+      }
+      if (isset($_GET['my_orders'])) {
+        include('user_orders.php');
+      }
+      if (isset($_GET['delete_account'])) {
+        include('delete_account.php');
+      }
+      ?>
     </div>
   </div>
 
@@ -198,8 +179,6 @@ session_start();
   <!--include footer-->
   <?php include('../includes/footer.php');
   ?>
-
-
   <!--bootstrap js link-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>

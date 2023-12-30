@@ -2,8 +2,8 @@
 if(isset($_GET['edit_brand'])){
     $brand_id = $_GET['edit_brand'];
     $get_brand = "SELECT * FROM brands WHERE brand_id = '$brand_id'";
-    $run_brand = mysqli_query($con,$get_brand);
-    $row_brand = mysqli_fetch_array($run_brand);
+    $run_brand = pg_query($con, $get_brand); // Assuming $con is the PostgreSQL connection variable
+    $row_brand = pg_fetch_array($run_brand);
     $brand_id = $row_brand['brand_id'];
     $brand_title = $row_brand['brand_title'];
 }
@@ -11,7 +11,7 @@ if(isset($_GET['edit_brand'])){
 if(isset($_POST['update_brand'])){
     $brand_title = $_POST['brand_title'];
     $update_brand = "UPDATE brands SET brand_title = '$brand_title' WHERE brand_id = '$brand_id'";
-    $run_update = mysqli_query($con,$update_brand);
+    $run_update = pg_query($con, $update_brand); // Assuming $con is the PostgreSQL connection variable
     if($run_update){
         echo "<script>alert('Brand has been updated')</script>";
         echo "<script>window.open('index.php?view_brands','_self')</script>";
@@ -32,3 +32,4 @@ if(isset($_POST['update_brand'])){
         <input type="submit" class="form-control btn btn-warning" name="update_brand" value="Update Brand" 
   aria-label="Username" aria-describedby="basic-addon1">
     </div>
+</form>

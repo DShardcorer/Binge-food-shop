@@ -12,8 +12,8 @@
 
     $username = $_SESSION['username'];
     $select_query = "SELECT * FROM user_table WHERE username = '$username'";
-    $result_query = mysqli_query($con, $select_query);
-    $row_fetch = mysqli_fetch_assoc($result_query);
+    $result_query = pg_query($con, $select_query);
+    $row_fetch = pg_fetch_assoc($result_query);
     $user_id = $row_fetch['user_id'];
 
     ?>
@@ -34,9 +34,9 @@
         <tbody class="bg-secondary text-light">
             <?php
             $get_order_details = "SELECT * FROM user_orders WHERE user_id = $user_id";
-            $result_order_details = mysqli_query($con, $get_order_details);
+            $result_order_details = pg_query($con, $get_order_details);
             $number = 1;
-            while ($row_order_details = mysqli_fetch_assoc($result_order_details)) {
+            while ($row_order_details = pg_fetch_assoc($result_order_details)) {
                 $order_id = $row_order_details['order_id'];
                 $amount_due = $row_order_details['amount_due'];
                 $total_products = $row_order_details['total_products'];
@@ -59,6 +59,7 @@
 
                 echo "</tr>";
                 $number++;
+                
             }
             ?>
         </tbody>

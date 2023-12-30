@@ -4,9 +4,6 @@ include('includes/connect.php');
 include('functions/common_function.php');
 ?>
 
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,8 +18,6 @@ include('functions/common_function.php');
   <!--font awersome link-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i&display=swap">
-
-
 
   <style>
     .card-description {
@@ -59,7 +54,7 @@ include('functions/common_function.php');
               <a class="nav-link" href="display_all.php">Products</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="./users_area/user_registration.php">Register</a>
+              <a class="nav-link" href="./users_area/user_registration.php">Register</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Contact</a>
@@ -70,12 +65,9 @@ include('functions/common_function.php');
             <li class="nav-item">
               <a class="nav-link" href="#">Total Price:$<?php total_cart_price(); ?>/-</a>
             </li>
-
-
           </ul>
           <form class="d-flex" action="" method="get">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_data">
-            <!--<button class="btn btn-outline-success" type="submit">Search</button> -->
             <input type="submit" class="btn btn-outline-success" value="Search" class="btn btn-outline-light" name="search_data_product">
           </form>
         </div>
@@ -115,9 +107,8 @@ include('functions/common_function.php');
   <!--third child-->
   <div class="bg-light">
     <h3 class="text-center">Latest Products</h3>
-    <p class="text-center">Explore well-famed food brands and pick your fill ! Let's get obese together !</p>
+    <p class="text-center">Explore well-famed food brands and pick your fill! Let's get obese together!</p>
   </div>
-
 
   <!--fourth child-->
   <div class="container">
@@ -137,8 +128,6 @@ include('functions/common_function.php');
             search_product();
           }
           ?>
-
-
         </div><!--end of row-->
       </div>
       <div class="col-md-2 bg-warning text-dark">
@@ -162,20 +151,14 @@ include('functions/common_function.php');
           <?php
           getcategories();
           ?>
-
-
         </ul>
       </div>
     </div>
   </div>
 
-
-
   <!--last child-->
   <!--include footer-->
-  <?php include('includes/footer.php');
-  ?>
-
+  <?php include('includes/footer.php'); ?>
 
   <!--bootstrap js link-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

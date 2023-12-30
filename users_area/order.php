@@ -20,18 +20,18 @@ $order_info_values = array();
 // Getting total item and total price
 $total_price = 0;
 $cart_query_price = "SELECT * FROM cart_details WHERE ip_address = '$get_ip_add'";
-$result_cart_price = mysqli_query($con, $cart_query_price);
+$result_cart_price = pg_query($con, $cart_query_price);
 
 // Loop through cart items
-while($row_price = mysqli_fetch_array($result_cart_price)){
+while($row_price = pg_fetch_array($result_cart_price)){
     $product_id = $row_price['product_id'];
     $quantity = $row_price['quantity'];
 
     // Get product details
     $select_product = "SELECT * FROM products WHERE product_id = $product_id";
-    $run_price = mysqli_query($con, $select_product);
+    $run_price = pg_query($con, $select_product);
 
-    while($row_product_price = mysqli_fetch_array($run_price)){
+    while($row_product_price = pg_fetch_array($run_price)){
         $product_price = $row_product_price['product_price'];
         $total_price += $product_price * $quantity;
 
@@ -42,24 +42,28 @@ while($row_price = mysqli_fetch_array($result_cart_price)){
 
 // Insert into user_orders table
 $insert_order = "INSERT INTO user_orders (user_id, amount_due, invoice_number, total_products, order_date, order_status) VALUES ($user_id, $total_price, $invoice_number, " . count($order_info_values) . ", '$order_date', '$status')";
-$result_query = mysqli_query($con, $insert_order);
+$result_query = pg_query($con, $insert_order);
 
 if($result_query){
     // Get the last inserted order_id
-    $last_order_id = mysqli_insert_id($con);
+    $last_order_id = pg_last_oid($result_query);
 
-    echo "<script>alert('Order has been placed successfully')</script>";
-    echo "<script>window.open('profile.php', '_self')";
+
 
     // Insert into order_info table with the original order_id
     if (!empty($order_info_values)) {
         $order_info_values_str = implode(", ", $order_info_values);
         $insert_order_info = "INSERT INTO order_info (order_id, product_id, quantity) VALUES $order_info_values_str";
-        $result_order_info = mysqli_query($con, $insert_order_info);
+        $result_order_info = pg_query($con, $insert_order_info);
     }
 
     // Delete items from cart
     $empty_cart = "DELETE FROM cart_details WHERE ip_address = '$get_ip_add'";
-    $result_delete = mysqli_query($con, $empty_cart);
+    $result_delete = pg_query($con, $empty_cart);
+
+    echo "<script>alert('Order has been placed successfully')</script>";
+    header("Location: profile.php");
+exit;
+
 }
 ?>

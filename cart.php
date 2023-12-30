@@ -1,11 +1,7 @@
-<!--connect to file-->
 <?php
 include('includes/connect.php');
 include('functions/common_function.php');
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,11 +14,9 @@ include('functions/common_function.php');
     <link rel="stylesheet" href="style.css">
     <!--bootstrap css link-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <!--font awersome link-->
+    <!--font awesome link-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i&display=swap">
-
-
 
     <style>
         .card-description {
@@ -80,8 +74,6 @@ include('functions/common_function.php');
                         <li class="nav-item">
                             <a class="nav-link" href="cart.php"><i class="fa-solid fa-cart-shopping"></i><sup><?php cart_item(); ?></sup></a>
                         </li>
-
-
                     </ul>
                 </div>
             </div>
@@ -91,7 +83,6 @@ include('functions/common_function.php');
     <!--cart func-->
     <?php
     cart();
-
     ?>
     <!-- second child -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
@@ -122,26 +113,23 @@ include('functions/common_function.php');
     <!--third child-->
     <div class="bg-light">
         <h3 class="text-center">Latest Products</h3>
-        <p class="text-center">Explore well-famed food brands and pick your fill ! Let's get obese together !</p>
+        <p class="text-center">Explore well-famed food brands and pick your fill! Let's get obese together!</p>
     </div>
-
 
     <!--fourth child-table-->
     <!--php code to display data-->
     <?php
-
     ?>
     <div class="container">
         <div class="row">
             <form action="" method="post">
                 <table class="table table-bordered text-center">
-
                     <tbody>
                         <?php
                         $get_ip_add = getIPAddress();
                         $cart_query = "SELECT * FROM cart_details WHERE ip_address='$get_ip_add' ";
-                        $result = mysqli_query($con, $cart_query);
-                        $result_count = mysqli_num_rows($result);
+                        $result = pg_query($con, $cart_query);
+                        $result_count = pg_num_rows($result);
                         if ($result_count > 0) {
                             echo "                    <thead>
                         <tr>
@@ -154,18 +142,17 @@ include('functions/common_function.php');
                             <th colspan='2'>Operations</th>
                         </tr>
                     </thead>";
-                            while ($row = mysqli_fetch_array($result)) {
+                            while ($row = pg_fetch_array($result)) {
                                 $product_id = $row['product_id'];
                                 $select_products = "SELECT * FROM products WHERE product_id = '$product_id' ";
-                                $result_products = mysqli_query($con, $select_products);
-                                while ($row_product_price = mysqli_fetch_array($result_products)) {
+                                $result_products = pg_query($con, $select_products);
+                                while ($row_product_price = pg_fetch_array($result_products)) {
                                     $product_price = array($row_product_price['product_price']);
                                     $price_table = $row_product_price['product_price'];
                                     $product_title = $row_product_price['product_title'];
                                     $product_image1 = $row_product_price['product_image1'];
                                     //get product quantity from cart_details table
                                     $product_quantity = $row['quantity'];
-
                         ?>
                                     <tr>
                                         <td><?php echo $product_title ?></td>
@@ -181,15 +168,11 @@ include('functions/common_function.php');
                                                 if ($quantity !== '') {
                                                     $quantities = (int)$quantity;
                                                     $update_cart = "UPDATE cart_details SET quantity = '$quantities' WHERE product_id = '$product_id' AND ip_address = '$get_ip_add' ";
-                                                    $result_product_quantity = mysqli_query($con, $update_cart);
+                                                    $result_product_quantity = pg_query($con, $update_cart);
                                                 }
                                             }
                                         }
-
-
-
                                         ?>
-
 
                                         <td>$<?php echo $price_table ?></td>
                                         <td><input type="checkbox" name="removeitem[]" value=<?php echo $product_id ?>> </td>
@@ -199,15 +182,12 @@ include('functions/common_function.php');
                                             <input type="submit" class="bg-secondary px-3" value="Remove Cart" name="remove_cart">
                                         </td>
                                     </tr>
-
-                        <?php }
+                        <?php
+                                }
                             }
                         } else {
-                            echo "<h2 class='text-center text-danger'>Your cart is empty. Add products to the cart !</h2>";
+                            echo "<h2 class='text-center text-danger'>Your cart is empty. Add products to the cart!</h2>";
                         }
-
-
-
                         ?>
                     </tbody>
                 </table>
@@ -216,8 +196,8 @@ include('functions/common_function.php');
                     <?php
                     $get_ip_add = getIPAddress();
                     $cart_query = "SELECT * FROM cart_details WHERE ip_address='$get_ip_add' ";
-                    $result = mysqli_query($con, $cart_query);
-                    $result_count = mysqli_num_rows($result);
+                    $result = pg_query($con, $cart_query);
+                    $result_count = pg_num_rows($result);
                     $total_price = total_cart_price();
 
                     if ($result_count > 0) {
@@ -229,7 +209,6 @@ include('functions/common_function.php');
                     }
                     ?>
                 </div>
-
             </form>
         </div>
     </div>
@@ -243,7 +222,7 @@ include('functions/common_function.php');
             foreach ($_POST['removeitem'] as $remove_id) {
                 echo $remove_id;
                 $delete_query = "DELETE FROM cart_details WHERE product_id='$remove_id' AND ip_address='$get_ip_add' ";
-                $run_delete = mysqli_query($con, $delete_query);
+                $run_delete = pg_query($con, $delete_query);
                 if ($run_delete) {
                     echo "<script>alert('Product removed from cart')</script>";
                     echo "<script>window.open('cart.php','_self')</script>";
@@ -258,12 +237,9 @@ include('functions/common_function.php');
     echo $remove_item = remove_cart_item();
     ?>
 
-
-
-
     <!--include footer-->
-    <?php include('includes/footer.php');
-    ?>
+    <?php include('includes/footer.php'); ?>
+
 
 
     <!--bootstrap js link-->
