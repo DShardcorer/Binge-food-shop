@@ -29,7 +29,7 @@
                 <td><?php echo $product_title; ?></td>
                 <td><img src='./product_images/<?php echo $product_image1; ?>' width='60' height='60'></td>
                 <td><?php echo $product_price; ?></td>
-                <td><?php echo $amount_sold; ?><</td>
+                <td><?php echo $amount_sold; ?></td>
                 <td><?php echo $product_status; ?></td>
                 <td><a href="index.php?edit_products=<?php echo $product_id ?>" class="text-dark"><i class="fa-solid fa-pen-to-square"></i></a></td>
                 <td><a href="index.php?delete_product=<?php echo $product_id ?>" class="text-dark"><i class="fa-solid fa-trash"></i></a></td>

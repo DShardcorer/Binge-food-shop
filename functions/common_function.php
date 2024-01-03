@@ -270,7 +270,7 @@ function view_details()
                             alt='Card image cap'>
                         <div class='card-body'>
                             <h5 class='card-title'> $product_title</h5>
-                            <p class='card-text card-description'>$product_description</p>
+                            <p class='card-text card-description'></p>
                             <p class='card-text card-description'>Price:$$product_price</p>
                             <a href='index.php?add_to_cart=$product_id' class='btn btn-warning'>Add to cart</a>
                             <a href='product_details.php?product_id=$product_id' class='btn btn-dark'>View Details</a>
@@ -289,6 +289,9 @@ function view_details()
                     <div class='col-md-6'>
                         <img class='card-img-top' src='./admin_area/product_images/$product_image3' alt='Card image cap'>
                     </div>
+                </div>
+                <div class ='row'>
+                <p class='text-center mt-5'>$product_description</p>
                 </div>
             </div>";
                 }
@@ -467,4 +470,3 @@ function get_user_order_details()
 }
 
 // ...
-?>

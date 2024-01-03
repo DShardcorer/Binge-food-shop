@@ -61,16 +61,6 @@ CREATE TABLE order_info (
   quantity int NOT NULL
 );
 
-INSERT INTO order_info (order_id, product_id, quantity) VALUES
-(363298888, 2, 1),
-(363298888, 6, 8),
-(363298888, 7, 1),
-(2, 2, 1),
-(2, 7, 7),
-(2, 7, 1),
-(2, 4, 5),
-(2, 7, 1),
-(2, 4, 1);
 
 CREATE TABLE products (
   product_id serial PRIMARY KEY,
@@ -163,3 +153,47 @@ CREATE TRIGGER order_info_insert_trigger
 AFTER INSERT ON order_info
 FOR EACH ROW
 EXECUTE FUNCTION update_amount_sold();
+
+
+ALTER TABLE order_info
+ADD CONSTRAINT fk_order_info_user_orders
+FOREIGN KEY (order_id) REFERENCES user_orders(order_id);
+
+ALTER TABLE user_payments
+ADD CONSTRAINT fk_user_payments_user_orders
+FOREIGN KEY (order_id) REFERENCES user_orders(order_id);
+
+ALTER TABLE user_orders
+ADD CONSTRAINT fk_user_orders_user_table
+FOREIGN KEY (user_id) REFERENCES user_table(user_id);
+
+ALTER TABLE cart_details
+DROP CONSTRAINT IF EXISTS cart_details_pkey;
+
+ALTER TABLE cart_details
+ADD CONSTRAINT fk_cart_details_products
+FOREIGN KEY (product_id) REFERENCES products(product_id);
+
+ALTER TABLE order_info
+ADD CONSTRAINT fk_order_info_products
+FOREIGN KEY (product_id) REFERENCES products(product_id);
+
+DELETE FROM products WHERE category_id = 5;
+DELETE FROM products WHERE category_id = 7;
+
+ALTER TABLE products
+ADD CONSTRAINT fk_products_categories
+FOREIGN KEY (category_id) REFERENCES categories(category_id);
+
+ALTER TABLE products
+ADD CONSTRAINT fk_products_brands
+FOREIGN KEY (brand_id) REFERENCES brands(brand_id);
+
+DROP TABLE IF EXISTS orders_pending;
+
+ALTER TABLE user_payments
+DROP COLUMN IF EXISTS invoice_number;
+
+
+ALTER TABLE user_payments
+DROP COLUMN IF EXISTS amount;

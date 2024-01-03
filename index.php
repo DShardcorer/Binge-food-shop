@@ -18,7 +18,6 @@ session_start();
     <!--font awersome link-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i&display=swap">
-
     <style>
         body {
             overflow-x: hidden;
@@ -140,8 +139,6 @@ session_start();
                         // Default: Fetch all products
                         getproducts();
                     }
-                    $ip = getIPAddress();
-                    echo 'User Real IP Address - ' . $ip;
                     ?>
                 </div><!--end of row-->
             </div>
