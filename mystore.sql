@@ -197,3 +197,8 @@ DROP COLUMN IF EXISTS invoice_number;
 
 ALTER TABLE user_payments
 DROP COLUMN IF EXISTS amount;
+
+
+--truncate user_table:
+truncate table user_table;
+
