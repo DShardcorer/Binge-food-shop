@@ -124,49 +124,56 @@ session_start();
 
     <!--fourth child-->
     <div class="container">
-        <div class="row">
-            <div class="col-md-10">
-                <!--products-->
-                <div class="row">
-                    <!--fetching products from database-->
+    <div class="row">
+        <div class="col-md-10">
+            <!-- products -->
+            <div class="row">
+                <?php
+                if (isset($_GET['brand']) || isset($_GET['category']) || isset($_GET['min_price']) || isset($_GET['max_price'])) {
+                    // Display the filter form and filtered products
+                    filterProducts();
+                } else {
+                    // Default: Fetch all products
+                    getproducts();
+                }
+                ?>
+            </div><!-- end of row -->
+        </div>
+        <div class="col-md-2 bg-warning text-dark">
+            <!-- sidebar with filters -->
+            <form method="get" action="index.php">
+                <!-- Brand filter -->
+                <div class="mb-3">
+                    <h4>BRAND</h4>
                     <?php
-                    if (isset($_GET['brand'])) {
-                        get_unique_brands();
-                    } elseif (isset($_GET['category'])) {
-                        // Fetch products based on categories
-                        get_unique_categories();
-                    } else {
-                        // Default: Fetch all products
-                        getproducts();
-                    }
+                    getbrandsAsCheckboxes();
                     ?>
-                </div><!--end of row-->
-            </div>
-            <div class="col-md-2 bg-warning text-dark">
-                <!--side bar-->
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item bg-secondary">
-                        <a href="" class="nav-link active text-center text-light custom-text">
-                            <h4>BRAND</h4>
-                        </a>
-                    </li>
+                </div>
+
+                <!-- Category filter -->
+                <div class="mb-3">
+                    <h4>CATEGORY</h4>
                     <?php
-                    getbrands();
+                    getcategoriesAsCheckboxes();
                     ?>
-                </ul>
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item bg-secondary">
-                        <a href="" class="nav-link active text-center text-light custom-text">
-                            <h4>CATEGORY</h4>
-                        </a>
-                    </li>
-                    <?php
-                    getcategories();
-                    ?>
-                </ul>
-            </div>
+                </div>
+
+                <!-- Price filter -->
+                <div class="mb-3">
+                    <h4>PRICE RANGE</h4>
+                    <label for="min_price">Min Price:</label>
+                    <input type="text" name="min_price" id="min_price" placeholder="Enter min price" value="<?php echo isset($_GET['min_price']) ? $_GET['min_price'] : 0; ?>">
+
+                    <label for="max_price">Max Price:</label>
+                    <input type="text" name="max_price" id="max_price" placeholder="Enter max price" value="<?php echo isset($_GET['max_price']) ? $_GET['max_price'] : 99999; ?>">
+
+                    <button type="submit" class="btn btn-success mt-4">Apply Filters</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
+
 
     <!--last child-->
     <!--include footer-->

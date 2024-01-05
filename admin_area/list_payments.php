@@ -10,7 +10,7 @@
     </thead>
     <tbody class='bg-secondary text-light'>
         <?php
-        $get_payments = "SELECT * FROM user_payments JOIN user_order ON user_payments.order_id = user_order.order_id";
+        $get_payments = "SELECT * FROM user_payments JOIN user_orders ON user_payments.order_id = user_orders.order_id";
         $result_payments = pg_query($con, $get_payments);
         $rows_count = pg_num_rows($result_payments);
 

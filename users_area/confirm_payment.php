@@ -53,15 +53,15 @@ if (isset($_POST['confirm_payment'])) {
     <div class="container my-5">
         <h1 class="text-center text-light">Confirm Payment</h1>
         <form action="" method="post">
-            <div class="form-outline my-5 text-center w-50 m-auto">
+            <div class="form-outline text-center text-light mb-4 w-50 m-auto">
                 <label for="invoice_number">Invoice Number</label>
                 <input type="text" class="form-control w-50 m-auto" name="invoice_number" value="<?php echo $invoice_number ?>" readonly>
             </div>
-            <div class="form-outline my-5 text-center w-50 m-auto">
+            <div class="form-outline my-5 text-center text-light w-50 m-auto">
                 <label for="amount">Amount</label>
                 <input type="text" class="form-control w-50 m-auto" name="amount" value="<?php echo $amount_due ?>" readonly>
             </div>
-            <div class="form-outline my-5 text-center w-50 m-auto">
+            <div class="form-outline my-5 text-center text-light w-50 m-auto">
                 <label for="payment_mode">Select Payment Method</label>
                 <select name="payment_mode" class="form-select w-50 m-auto" required>
                     <option value="">Select Payment Method</option>

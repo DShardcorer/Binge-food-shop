@@ -44,11 +44,12 @@ include('../functions/common_function.php');
             <div class="col md-6">
             <a href="https://www.paypal.com/vn/home" class="" target="_blank">
                 <img src="../images/upi.jpg" alt="" class="">
+                <h2 class="text-center">Placeholder Immediate Online Payment</h2>
             </a>
             </div>
             <div class="col md-6">
-            <a href="order.php?user_id=<?php echo $user_id?>" class="text-center" target="_blank">
-                <h2 class="">Pay upon delivery</h2>
+            <a href="order.php?user_id=<?php echo $user_id?>" class="text-center" target="_self">
+                <h2 class="">Pay upon receiving package</h2>
             </a>
             </div>
             

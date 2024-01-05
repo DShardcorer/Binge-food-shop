@@ -80,61 +80,93 @@ function get_all_products()
     }
 }
 
-function get_unique_categories()
+
+
+// New filter version   
+function getbrandsAsCheckboxes()
 {
     global $con;
-    $category_id = $_GET['category'];
-    $select_query = "SELECT * FROM products WHERE category_id='$category_id'";
+    $select_brands = "SELECT * FROM brands";
+    $result_brands = pg_query($con, $select_brands);
 
-    $num_of_rows = pg_num_rows(pg_query($con, $select_query));
-
-    if ($num_of_rows == 0) {
-        echo "<h1 class='text-center'>No products found in this category</h1>";
-    }
-
-    $result_query = pg_query($con, $select_query);
-
-    while ($row = pg_fetch_assoc($result_query)) {
-        $product_id = $row['product_id'];
-        $product_title = $row['product_title'];
-        $product_description = $row['product_description'];
-        $product_keywords = $row['product_keywords'];
-        $product_image1 = $row['product_image1'];
-        $product_price = $row['product_price'];
-        $category_id = $row['category_id'];
-        $brand_id = $row['brand_id'];
-        echo "<div class=' col-md-4 mb-2'>
-      <div class='card'>
-        <img class='card-img-top'
-          src='./admin_area/product_images/$product_image1'
-          alt='Card image cap'>
-        <div class='card-body'>
-          <h5 class='card-title'> $product_title</h5>
-          <p class='card-text card-description'>$product_description</p>
-          <p class='card-text card-description'>Price:$$product_price</p>
-          <a href='index.php?add_to_cart=$product_id' class='btn btn-warning'>Add to cart</a>
-          <a href='product_details.php?product_id=$product_id' class='btn btn-dark'>View Details</a>
-        </div>
-      </div>
-
-    </div>";
+    while ($row_data = pg_fetch_assoc($result_brands)) {
+        $brand_id = $row_data['brand_id'];
+        $brand_title = $row_data['brand_title'];
+        echo "<div class='form-check'>
+                  <input class='form-check-input' type='checkbox' name='brand[]' value='$brand_id' id='brand_$brand_id'>
+                  <label class='form-check-label' for='brand_$brand_id'>$brand_title</label>
+              </div>";
     }
 }
 
-function get_unique_brands()
+function getcategoriesAsCheckboxes()
 {
     global $con;
-    $brand_id = $_GET['brand'];
-    $select_query = "SELECT * FROM products WHERE brand_id='$brand_id'";
+    $select_cats = "SELECT * FROM categories";
+    $result_cats = pg_query($con, $select_cats);
 
-    $num_of_rows = pg_num_rows(pg_query($con, $select_query));
+    while ($row_cats = pg_fetch_assoc($result_cats)) {
+        $category_id = $row_cats['category_id'];
+        $category_title = $row_cats['category_title'];
+        echo "<div class='form-check'>
+                  <input class='form-check-input' type='checkbox' name='category[]' value='$category_id' id='category_$category_id'>
+                  <label class='form-check-label' for='category_$category_id'>$category_title</label>
+              </div>";
+    }
+}
 
-    if ($num_of_rows == 0) {
-        echo "<h1 class='text-center'>No products found for this brand</h1>";
+
+
+
+function filterProducts()
+{
+    global $con;
+
+    // Get filter parameters from the URL
+    $category_ids = isset($_GET['category']) ? $_GET['category'] : [];
+    $brand_ids = isset($_GET['brand']) ? $_GET['brand'] : [];
+    $min_price = isset($_GET['min_price']) ? $_GET['min_price'] : null;
+    $max_price = isset($_GET['max_price']) ? $_GET['max_price'] : null;
+
+    $select_query = "SELECT * FROM products WHERE 1=1";
+
+    if (!empty($category_ids)) {
+        $select_query .= " AND category_id IN ('" . implode("','", $category_ids) . "')";
     }
 
+    if (!empty($brand_ids)) {
+        // Use explicit type casting with ::int instead of CAST function
+        $select_query .= " AND brand_id::int IN ('" . implode("','", $brand_ids) . "')";
+    }
+
+    if ($min_price !== null) {
+        $min_price_condition = " AND CAST(product_price AS FLOAT) >= " . (float)$min_price;
+        $select_query = $select_query . $min_price_condition;
+    }
+
+    if ($max_price !== null) {
+        $max_price_condition = " AND CAST(product_price AS FLOAT) <= " . (float)$max_price;
+        $select_query = $select_query . $max_price_condition;
+    }
+
+
+
+    // Execute the query
     $result_query = pg_query($con, $select_query);
 
+    if ($result_query === false) {
+        echo "Query failed: " . pg_last_error($con);
+        return;
+    }
+
+    $num_of_rows = pg_num_rows($result_query);
+
+    if ($num_of_rows == 0) {
+        echo "<h1 class='text-center'>No products found based on the selected filters</h1>";
+        return;
+    }
+
+    // Display filtered products
     while ($row = pg_fetch_assoc($result_query)) {
         $product_id = $row['product_id'];
         $product_title = $row['product_title'];
@@ -153,7 +185,7 @@ function get_unique_brands()
                 <div class='card-body'>
                     <h5 class='card-title'> $product_title</h5>
                     <p class='card-text card-description'>$product_description</p>
-                    <p class='card-text card-description'>Price:$$product_price</p>
+                    <p class='card-text card-description'>Price: $$product_price</p>
                     <a href='index.php?add_to_cart=$product_id' class='btn btn-warning'>Add to cart</a>
                     <a href='product_details.php?product_id=$product_id' class='btn btn-dark'>View Details</a>
                 </div>
@@ -162,41 +194,17 @@ function get_unique_brands()
     }
 }
 
-// displaying brands in the sidenav
-function getbrands()
-{
-    global $con;
-    $select_brands = "SELECT * FROM brands";
-    $result_brands = pg_query($con, $select_brands);
-
-    while ($row_data = pg_fetch_assoc($result_brands)) {
-        $brand_id = $row_data['brand_id'];
-        $brand_title = $row_data['brand_title'];
-        echo "<li><a class='nav-link' href='index.php?brand=$brand_id'>$brand_title</a></li>";
-    }
-}
-
-// displaying categories in the sidenav
-function getcategories()
-{
-    global $con;
-    $select_cats = "SELECT * FROM categories";
-    $result_cats = pg_query($con, $select_cats);
-
-    while ($row_cats = pg_fetch_assoc($result_cats)) {
-        $category_id = $row_cats['category_id'];
-        $category_title = $row_cats['category_title'];
-        echo "<li><a class='nav-link' href='index.php?category=$category_id'>$category_title</a></li>";
-    }
-}
-
-// Continue the remaining functions...
 
 
 
 
 
-// ...
+
+
+
+
+
+
 
 // Search product
 function search_product()
@@ -204,7 +212,7 @@ function search_product()
     global $con;
     if (isset($_GET['search_data_product'])) {
         $search_data_value = $_GET['search_data'];
-        $search_query = "SELECT * FROM products WHERE product_keywords ILIKE '%$search_data_value%'";
+        $search_query = "SELECT * FROM products WHERE product_keywords LIKE '%$search_data_value%'";
         $result_query = pg_query($con, $search_query);
         $num_of_rows = pg_num_rows(pg_query($con, $search_query));
 
