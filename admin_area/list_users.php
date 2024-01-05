@@ -2,7 +2,7 @@
 <table class="table table-bordered mt-5">
     <thead class="bg-warning">
         <th>Sl No</th>
-        <th>Userame</th>
+        <th>Username</th>
         <th>Email</th>
         <th>Image</th>
         <th>Address</th>

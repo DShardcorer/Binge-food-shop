@@ -2,6 +2,8 @@
 <table class="table table-bordered mt-5">
     <thead class="bg-warning">
         <th>Sl No</th>
+        <th>Order Id</th>
+        <th>Username</th>
         <th>Due Amount</th>
         <th>Invoice Number</th>
         <th>Total Products</th>
@@ -11,7 +13,7 @@
     </thead>
     <tbody class='bg-secondary text-light'>
         <?php
-        $get_order = "SELECT * FROM user_orders";
+        $get_order = "SELECT * FROM user_orders JOIN user_table ON user_orders.user_id = user_table.user_id ORDER BY order_id DESC";
         $result_order = pg_query($con, $get_order);
         $rows_count = pg_num_rows($result_order);
 
@@ -21,6 +23,7 @@
             $i = 0;
             while ($row = pg_fetch_assoc($result_order)) {
                 $order_id = $row['order_id'];
+                $username = $row['username'];
                 $amount_due = $row['amount_due'];
                 $invoice_number = $row['invoice_number'];
                 $total_products = $row['total_products'];
@@ -29,6 +32,8 @@
                 $i++;
                 echo "<tr class='text-center'>
                     <td>$i</td>
+                    <td>$order_id</td>
+                    <td>$username</td>
                     <td>$amount_due</td>
                     <td>$invoice_number</td>
                     <td>$total_products</td>
