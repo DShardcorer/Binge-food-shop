@@ -1,7 +1,15 @@
 <?php
+@session_start();
 include('../includes/connect.php');
 include('../functions/common_function.php');
-@session_start();
+if (isset($_SESSION['username'])) {
+    $username = $_SESSION['username'];
+} else {
+    // Redirect or handle unauthorized access
+    echo "<script>alert('Please log in to place an order')</script>";
+    header("Location: user_login.php");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -27,14 +35,12 @@ include('../functions/common_function.php');
 <body>
     <!--php code to access user id-->
     <?php
-    $user_ip= getIPAddress();
-    $get_user = "SELECT * FROM user_table WHERE user_ip='$user_ip'";
-    $result = pg_query($con, $get_user);
-    $run_query = pg_fetch_array($result);
-    $user_id = $run_query['user_id'];
-
+    $username = $_SESSION['username'];
+    $select_query = "SELECT * FROM user_table WHERE username = '$username'";
+    $result_query = pg_query($con, $select_query);
+    $row_fetch = pg_fetch_assoc($result_query);
+    $user_id = $row_fetch['user_id'];
     ?>
-
 
 
 

@@ -128,6 +128,17 @@ function filterProducts()
     $min_price = isset($_GET['min_price']) ? $_GET['min_price'] : null;
     $max_price = isset($_GET['max_price']) ? $_GET['max_price'] : null;
 
+    $category_ids = isset($_GET['category']) ? $_GET['category'] : [];
+    $brand_ids = isset($_GET['brand']) ? $_GET['brand'] : [];
+    $min_price = isset($_GET['min_price']) ? $_GET['min_price'] : null;
+    $max_price = isset($_GET['max_price']) ? $_GET['max_price'] : null;
+
+    // Sorting options
+    $selected_sort_price = isset($_GET['sort_price']) ? $_GET['sort_price'] : '';
+    $selected_sort_name = isset($_GET['sort_name']) ? $_GET['sort_name'] : '';
+    $selected_sort_popularity = isset($_GET['sort_popularity']) ? $_GET['sort_popularity'] : '';
+
+
     $select_query = "SELECT * FROM products WHERE 1=1";
 
     if (!empty($category_ids)) {
@@ -149,8 +160,56 @@ function filterProducts()
         $select_query = $select_query . $max_price_condition;
     }
 
+    $sorting_conditions = "";
 
+    if (!empty($selected_sort_price)) {
+        $sorting_conditions .= "ORDER BY ";
+        switch ($selected_sort_price) {
+            case 'price_asc':
+                $sorting_conditions .= "CAST(product_price AS FLOAT) ASC";
+                break;
+            case 'price_desc':
+                $sorting_conditions .= "CAST(product_price AS FLOAT) DESC";
+                break;
+        }
+    }
 
+    if (!empty($selected_sort_name)) {
+        if (!empty($sorting_conditions)) {
+            $sorting_conditions .= ", ";
+        }else{
+            $sorting_conditions .= "ORDER BY ";
+        }
+        switch ($selected_sort_name) {
+            case 'name_asc':
+                $sorting_conditions .= "product_title ASC";
+                break;
+            case 'name_desc':
+                $sorting_conditions .= "product_title DESC";
+                break;
+        }
+    }
+
+    if (!empty($selected_sort_popularity)) {
+        if (!empty($sorting_conditions)) {
+            $sorting_conditions .= ", ";
+        }else{
+            $sorting_conditions .= "ORDER BY ";
+        }
+        switch ($selected_sort_popularity) {
+            case 'popularity_desc':
+                $sorting_conditions .= "amount_sold DESC";
+                break;
+            case 'popularity_asc':
+                $sorting_conditions .= "amount_sold ASC";
+                break;
+        }
+    }
+
+    // Add sorting conditions to the query only if they are specified
+    if (!empty($sorting_conditions)) {
+        $select_query .= " $sorting_conditions";
+    }
     // Execute the query
     $result_query = pg_query($con, $select_query);
 
@@ -399,57 +458,8 @@ function total_cart_price()
     echo $total_price;
 }
 
-function total_cart_price0()
-{
-    global $con;
-    $get_ip_add = getIPAddress();
-    $total_price = 0;
-    $cart_query = "SELECT * FROM cart_details WHERE ip_address='$get_ip_add' ";
-    $result = pg_query($con, $cart_query);
-
-    while ($row = pg_fetch_assoc($result)) {
-        $product_id = $row['product_id'];
-        $select_products = "SELECT * FROM products WHERE product_id = '$product_id' ";
-        $result_products = pg_query($con, $select_products);
-
-        while ($row_product_price = pg_fetch_assoc($result_products)) {
-            $product_price = array($row_product_price['product_price']);
-            $values = array_sum($product_price);
-            $total_price += $values;
-        }
-    }
-    echo $total_price;
-}
 
 // Get user order details
-function get_user_order_details0()
-{
-    global $con;
-    $username = $_SESSION['username'];
-    $get_details = "SELECT * FROM user_table WHERE username = '$username'";
-    $result_query = pg_query($con, $get_details);
-    $row = pg_fetch_assoc($result_query);
-
-    while ($row_query = pg_fetch_assoc($result_query)) {
-        $user_id = $row_query['user_id'];
-
-        if (!isset($_GET['edit_account'])) {
-            if (!isset($_GET['my_order'])) {
-                if (!isset($_GET['delete_account'])) {
-                    $sql = "SELECT COUNT(*) AS row_count FROM user_orders WHERE user_id = '$user_id' AND order_status = 'pending'";
-                    $result = pg_query($con, $sql);
-                    $row = pg_fetch_assoc($result);
-                    $row_count = $row['row_count'];
-
-                    if ($row_count > 0) {
-                        echo "<h1 class='text-center text-warning'>You have <span class='text-danger'>$row_count</span> pending orders</h1>";
-                    }
-                }
-            }
-        }
-    }
-}
-
 function get_user_order_details()
 {
     global $con;
@@ -472,7 +482,7 @@ function get_user_order_details()
         } else {
             echo "<h1 class='text-center text-success my-5 mt-5 mb-2'>
             You have no pending order</h1>
-            <p class = 'text-center'> <a href='index.php' class='text-center text-danger'>Explore our products !</a><p>";
+            <p class = 'text-center'> <a href='../index.php' class='text-center text-danger'>Explore our products !</a><p>";
         }
     }
 }

@@ -109,55 +109,81 @@ session_start();
 
     <!--fourth child-->
     <div class="container">
-    <div class="row">
-        <div class="col-md-10">
-            <!-- products -->
-            <div class="row">
-                <?php
-                if (isset($_GET['brand']) || isset($_GET['category']) || isset($_GET['min_price']) || isset($_GET['max_price'])) {
-                    // Display the filter form and filtered products
-                    filterProducts();
-                } else {
-                    // Default: Fetch all products
-                    getproducts();
-                }
-                ?>
-            </div><!-- end of row -->
-        </div>
-        <div class="col-md-2 bg-warning text-dark">
-            <!-- sidebar with filters -->
-            <form method="get" action="index.php">
-                <!-- Brand filter -->
-                <div class="mb-3">
-                    <h4>BRAND</h4>
+        <div class="row">
+            <div class="col-md-10">
+                <!-- products -->
+                <div class="row">
                     <?php
-                    getbrandsAsCheckboxes();
+                    if (isset($_GET['brand']) || isset($_GET['category']) || isset($_GET['min_price']) || isset($_GET['max_price'])) {
+                        // Display the filter form and filtered products
+                        filterProducts();
+                    } else {
+                        // Default: Fetch all products
+                        getproducts();
+                    }
                     ?>
-                </div>
+                </div><!-- end of row -->
+            </div>
+            <div class="col-md-2 bg-warning text-dark">
+                <!-- sidebar with filters -->
+                <form method="get" action="index.php">
+                    <!-- Brand filter -->
+                    <div class="mb-3">
+                        <h4>BRAND</h4>
+                        <?php
+                        getbrandsAsCheckboxes();
+                        ?>
+                    </div>
 
-                <!-- Category filter -->
-                <div class="mb-3">
-                    <h4>CATEGORY</h4>
-                    <?php
-                    getcategoriesAsCheckboxes();
-                    ?>
-                </div>
+                    <!-- Category filter -->
+                    <div class="mb-3">
+                        <h4>CATEGORY</h4>
+                        <?php
+                        getcategoriesAsCheckboxes();
+                        ?>
+                    </div>
+                    <!-- Sorting options for Price -->
+                    <div class="mb-3">
+                        <h4>SORT BY PRICE</h4>
+                        <label>
+                            <input type="radio" name="sort_price" value="price_asc">
+                            Price (Low to High)
+                        </label>
+                        <label>
+                            <input type="radio" name="sort_price" value="price_desc">
+                            Price (High to Low)
+                        </label>
+                    </div>
 
-                <!-- Price filter -->
-                <div class="mb-3">
-                    <h4>PRICE RANGE</h4>
-                    <label for="min_price">Min Price:</label>
-                    <input type="text" name="min_price" id="min_price" placeholder="Enter min price" value="<?php echo isset($_GET['min_price']) ? $_GET['min_price'] : 0; ?>">
+                    <!-- Sorting options for Name -->
+                    <div class="mb-3">
+                        <h4>SORT BY NAME</h4>
+                        <label>
+                            <input type="radio" name="sort_name" value="name_asc">
+                            Name (A-Z)
+                        </label>
+                        <label>
+                            <input type="radio" name="sort_name" value="name_desc">
+                            Name (Z-A)
+                        </label>
+                    </div>
 
-                    <label for="max_price">Max Price:</label>
-                    <input type="text" name="max_price" id="max_price" placeholder="Enter max price" value="<?php echo isset($_GET['max_price']) ? $_GET['max_price'] : 99999; ?>">
+                    <!-- Price filter -->
+                    <div class="mb-3">
+                        <h4>PRICE RANGE</h4>
+                        <label for="min_price">Min Price:</label>
+                        <input type="text" name="min_price" id="min_price" placeholder="Enter min price" value="<?php echo isset($_GET['min_price']) ? $_GET['min_price'] : 0; ?>">
 
-                    <button type="submit" class="btn btn-success mt-4">Apply Filters</button>
-                </div>
-            </form>
+                        <label for="max_price">Max Price:</label>
+                        <input type="text" name="max_price" id="max_price" placeholder="Enter max price" value="<?php echo isset($_GET['max_price']) ? $_GET['max_price'] : 99999; ?>">
+
+                        <button type="submit" class="btn btn-success mt-4">Apply Filters</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+
 
     <!--last child-->
     <!--include footer-->
