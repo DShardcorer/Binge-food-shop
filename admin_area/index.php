@@ -76,8 +76,8 @@ if (!isset($_SESSION['admin_name'])) {
                 <button class="btn-custom"><a href="index.php?view_categories" class="text-center nav-link text-dark bg-warning my-1">View Categories</a></button>
                 <button class="btn-custom"><a href="index.php?insert_brands" class="text-center nav-link text-dark bg-warning my-1">Insert Brands</a></button>
                 <button class="btn-custom"><a href="index.php?view_brands" class="text-center nav-link text-dark bg-warning my-1">View Brands</a></button>
-                <button class="btn-custom"><a href="index.php?list_orders" class="text-center nav-link text-dark bg-warning my-1">Orders</a></button>
-                <button class="btn-custom"><a href="index.php?list_payments" class="text-center nav-link text-dark bg-warning my-1">Payments</a></button>
+                <button class="btn-custom"><a href="list_orders.php" class="text-center nav-link text-dark bg-warning my-1">Orders</a></button>
+                <button class="btn-custom"><a href="list_payments.php" class="text-center nav-link text-dark bg-warning my-1">Payments</a></button>
                 <button class="btn-custom"><a href="index.php?list_users" class="text-center nav-link text-dark bg-warning my-1">Users</a></button>
                 <button class="btn-custom"><a href="admin_logout.php" class="text-center nav-link text-dark bg-warning my-1">Logout</a></button>
             </div>
@@ -120,9 +120,7 @@ if (!isset($_SESSION['admin_name'])) {
         if (isset($_GET["delete_brand"])) {
             include("delete_brand.php");
         }
-        if (isset($_GET["list_orders"])) {
-            include("list_orders.php");
-        }
+
         if (isset($_GET["delete_order"])) {
             include("delete_order.php");
         }

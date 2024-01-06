@@ -202,3 +202,22 @@ DROP COLUMN IF EXISTS amount;
 --truncate user_table:
 truncate table user_table;
 
+CREATE INDEX idx_order_date ON user_orders (order_date);
+
+CREATE INDEX idx_payment_date ON user_payments (date);
+
+CREATE OR REPLACE FUNCTION get_total_sales(start_date DATE, end_date DATE, payment_mode_filter VARCHAR(255) DEFAULT NULL)
+RETURNS NUMERIC AS
+$$
+DECLARE
+    total_sales NUMERIC;
+BEGIN
+    SELECT COALESCE(SUM(amount_due), 0) INTO total_sales
+    FROM user_payments JOIN user_orders ON user_orders.order_id = user_payments.order_id
+    WHERE date BETWEEN start_date AND end_date 
+    AND (payment_mode_filter IS NULL OR payment_mode_filter = user_payments.payment_mode);
+
+    RETURN total_sales;
+END;
+$$
+LANGUAGE plpgsql;
