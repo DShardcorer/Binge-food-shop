@@ -202,4 +202,3 @@ DROP COLUMN IF EXISTS amount;
 --truncate user_table:
 truncate table user_table;
 
-ALTER TABLE cart_details ADD COLUMN user_id int;
