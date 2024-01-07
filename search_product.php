@@ -122,7 +122,7 @@ include('functions/common_function.php');
                         filterProducts();
                     } else {
                         // Default: Fetch all products
-                        getproducts();
+                        search_product();
                     }
                     ?>
                 </div><!-- end of row -->
