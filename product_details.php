@@ -119,7 +119,7 @@ session_start();
                         filterProducts();
                     } else {
                         // Default: Fetch all products
-                        getproducts();
+                        view_details();
                     }
                     ?>
                 </div><!-- end of row -->
