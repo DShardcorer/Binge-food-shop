@@ -104,6 +104,8 @@ EXECUTE FUNCTION update_amount_sold();
 
 CREATE INDEX idx_order_date ON user_orders (order_date);
 CREATE INDEX idx_payment_date ON user_payments (date);
+CREATE INDEX idx_product_id ON products (product_id);
+CREATE INDEX idx_user_id ON user_table (user_id);
 
 CREATE OR REPLACE FUNCTION get_total_sales(start_date DATE, end_date DATE, payment_mode_filter VARCHAR(255) DEFAULT NULL)
 RETURNS NUMERIC AS
