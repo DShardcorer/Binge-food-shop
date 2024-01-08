@@ -42,7 +42,6 @@ if (isset($_POST['insert_product'])) {
                 echo "<script>window.open('index.php?view_products','_self')</script>";
             } else {
                 echo "<script>alert('Product not inserted successfully!')</script>";
-                echo "<script>window.open('index.php?insert_products','_self')</script>";
             }
         } else {
             echo "<script>alert('File upload failed!')</script>";
