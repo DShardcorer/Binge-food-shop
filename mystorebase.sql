@@ -30,9 +30,9 @@ CREATE TABLE user_table (
 
 CREATE TABLE products (
   product_id serial PRIMARY KEY,
-  product_title varchar(100) NOT NULL,
-  product_description varchar(500) NOT NULL,
-  product_keywords varchar(255) NOT NULL,
+  product_title varchar(500) NOT NULL,
+  product_description varchar(1000) NOT NULL,
+  product_keywords varchar(500) NOT NULL,
   category_id int NOT NULL,
   brand_id int NOT NULL,
   product_image1 varchar(255) NOT NULL,
