@@ -1,0 +1,137 @@
+title Admin Interaction Sequence Diagram
+
+actor admin
+
+participant login
+participant register
+participant admin dashboard
+participant insert product
+participant view products
+participant edit product
+participant insert category
+participant view categories
+participant insert brand
+participant view brands
+participant orders
+participant payments
+participant users
+
+admin->login: enter admin credentials
+login->database: send admin username and password to database
+database-->database: validate the admin credentials
+alt correct admin username and password
+database-->login: login successful
+login-->admin dashboard: redirect to admin dashboard
+else incorrect admin username or password
+database-->login: login rejected
+admin->login: re-enter admin credentials
+end
+
+
+admin->admin dashboard: Admin selects "Insert Product"
+admin dashboard->insert product: Redirect to "Insert Product" page
+admin->insert product: Fill in new product's info
+insert product->database: Collect product details
+insert product->database: Validate and insert product into the database
+database-->insert product: Notify successful product insertion
+
+
+
+admin->admin dashboard: Admin selects "View Products"
+admin dashboard->view products: Initiate "View Products"
+view products->database: Retrieve the list of products from the database
+database-->view products: Return the list of products
+admin->view products: Admin chooses the edit symbol
+view products->edit product: redirect to "Update Product" page
+admin->edit product: Fill in new info of the product
+edit product->database:Update product with corresponding product_id in the database
+database-->edit product:Notify successful update
+edit product->view products:redirect to "View Product" page
+admin->view products:Admin chooses trashcan symbol
+view products->database: remove product with corresponding product_id from the database
+database-->view products:Notify successful deletion
+
+
+
+
+admin->admin dashboard: Admin selects "View Categories"
+admin dashboard->view categories: Initiate "View Categories"
+view categories->database: Retrieve the list of categories from the database
+database-->view categories: Return and display the list of categories
+admin->view categories: Admin selects the edit symbol and fill in the new category name
+view categories->database: Update category_title with the corresponding category_id in the database
+database->view categories: Notify successful edit
+admin->view categories: Admin selects the trashcan symbol
+view categories->database: Remove category with corresponding category_id from the database
+database-->view categories: Notify successful deletion
+
+
+
+admin dashboard->admin dashboard: Admin selects "Insert Category"
+admin dashboard->insert category: Initiate "Insert Category"
+insert category->database: Collect category details
+database-->insert category: Validate and insert category into the database
+alt category already exists
+database-->insert category: Notify category already exists
+else category does not exist
+database-->insert category: Notify successful category insertion
+end
+
+
+admin->admin dashboard: Admin selects "View Brands"
+admin dashboard->view brands: Initiate "View Brands"
+view brands->database: Retrieve the list of brands from the database
+database-->view brands: Return and display the list of brands
+admin->view brands: Admin selects the edit symbol and fill in the new brand name
+view brands->database: Update brand_title with the corresponding brand_id in the database
+database->view brands: Notify successful edit
+admin->view brands: Admin selects the trashcan symbol
+view brands->database: Remove brand with corresponding brand_id from the database
+database-->view brands: Notify successful deletion
+
+
+
+
+admin->admin dashboard: Admin selects "Insert Brand"
+admin dashboard->insert brand: Initiate "Insert Brand"
+insert brand->database: Collect brand details
+database-->insert brand: Validate and insert brand into the database
+alt brand already exists
+database-->insert brand: Notify brand already exists
+else brand does not exist
+database-->insert brand: Notify successful brand insertion
+end
+
+admin dashboard->admin dashboard: Admin selects "View Orders"
+admin dashboard->orders: Initiate "View Orders"
+orders->database: Retrieve the list of orders from the database
+database-->orders: Return the list of orders
+admin->orders: Fill in date and status(Completed/Incomplete) filters
+orders->database: Retrieve the list of orders with the corresponding date and status filters from the database
+database-->orders: Return the list of orders
+
+
+
+
+
+admin->admin dashboard: Admin selects "View Payments"
+admin dashboard->payments: Initiate "View Payments"
+payments->database: Retrieve the list of payments from the database
+database-->payments: Return the list of payments
+admin->payments: Fill in date and payment mode filters
+payments->database: Retrieve the list of payments with the corresponding date and payment mode filters from the database
+database-->payments: Return the list of payments along with total $ got from the filtered payments
+
+
+admin->admin dashboard: Admin selects "View Users"
+admin dashboard->users: Initiate "View Users"
+users->database: Retrieve the list of users from the database
+database-->users: Return the list of users
+admin->users: Admin selects the trashcan symbol
+users->database: Remove user with corresponding user_id from the database
+database-->users: Notify successful deletion
+
+
+admin->admin dashboard: Admin selects "Logout"
+admin dashboard->login: Redirect to login page
+

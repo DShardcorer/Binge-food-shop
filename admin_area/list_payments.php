@@ -172,7 +172,7 @@ if (!isset($_SESSION['admin_name'])) {
                 <th>Amount</th>
                 <th>Invoice Number</th>
                 <th>Payment Method</th>
-                <th>Order Date</th>
+                <th>Payment Date</th>
                 <th>Delete</th>
             </thead>
             <tbody class='bg-secondary text-light'>
