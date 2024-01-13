@@ -1,6 +1,6 @@
 <?php
 include('../includes/connect.php');
-session_start();
+
 
 $username_session = $_SESSION['username'];
 

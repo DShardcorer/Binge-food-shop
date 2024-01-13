@@ -20,12 +20,14 @@ if (isset($_GET['edit_products'])) {
     $result_category = pg_query($con, $get_category);
     $row_category = pg_fetch_assoc($result_category);
     $category_title = $row_category['category_title'];
+    $category_id = $row_category['category_id'];
 
     //fetch brand name
     $get_brand = "SELECT * FROM brands WHERE brand_id = $product_brand";
     $result_brand = pg_query($con, $get_brand);
     $row_brand = pg_fetch_assoc($result_brand);
     $brand_title = $row_brand['brand_title'];
+    $brand_id = $row_brand['brand_id'];
 }
 ?>
 
@@ -50,7 +52,7 @@ if (isset($_GET['edit_products'])) {
         <div class="form-outline w-50 m-auto mb-4">
             <label for="product_category" class="form-label">Product Category</label>
             <select name="product_category" id="product_category">
-                <option value="<?php echo $category_title ?>"><?php echo $category_title ?></option>
+                <option value="<?php echo $category_id ?>"><?php echo $category_title ?></option>
                 <?php
                 $get_category_all = "SELECT * FROM categories";
                 $result_category_all = pg_query($con, $get_category_all);
@@ -66,7 +68,7 @@ if (isset($_GET['edit_products'])) {
         <div class="form-outline w-50 m-auto mb-4">
             <label for="product_brands" class="form-label">Product Brands</label>
             <select name="product_brands" id="product_brands">
-                <option value="<?php echo $brand_title ?>"><?php echo $brand_title ?></option>
+                <option value="<?php echo $brand_id ?>"><?php echo $brand_title ?></option>
                 <?php
                 $get_brand_all = "SELECT * FROM brands";
                 $result_brand_all = pg_query($con, $get_brand_all);

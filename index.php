@@ -100,7 +100,7 @@ session_start();
               </li>";
             } else {
                 echo "<li class='nav-item'>
-                        <a class='nav-link' href=''>Welcome " . $_SESSION['username'] . "!</a> 
+                        <a class='nav-link' href='./users_area/profile.php'>Welcome " . $_SESSION['username'] . "!</a> 
                     </li>";
             }
 

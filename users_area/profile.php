@@ -150,9 +150,7 @@ session_start();
         <li class="nav-item ">
           <a class="nav-link active" aria-current="page" href="profile.php?edit_account">Edit Account</a>
         </li>
-        <li class="nav-item ">
-          <a class="nav-link active" aria-current="page" href="profile.php?delete_account">Delete Account</a>
-        </li>
+
         <li class="nav-item ">
           <a class="nav-link active" aria-current="page" href="logout.php">Logout</a>
         </li>

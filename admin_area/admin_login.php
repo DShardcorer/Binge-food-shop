@@ -49,8 +49,6 @@ include("../functions/common_function.php");
                             Login
                         </button>
 
-                        <p class="small fw-bold mt-2 pt-1">Don't have an account ? <a
-                                href="admin_registration.php" class="link-danger">Register </a></p>
                     </form>
                 </div>
             </div>
